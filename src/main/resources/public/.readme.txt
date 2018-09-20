@@ -1,0 +1,5 @@
+1) It needs npm http-server to run
+2) Download and install node
+2) Go to project folder run this command in command line to install http-server  npm install http-server
+3) TO run project  run the command http-server -p <portnumber>
+node package manager

@@ -1,0 +1,12 @@
+[{"id":1,"name":"My Prod1","price":"30","thumbnail":"https://unsplash.it/500/300?image=0","description":"Lorem ipsum"},
+{"id":2,"name":"My Prod2","price":"38","thumbnail":"https://unsplash.it/500/300?image=1","description":"Lorem ipsum"},
+{"id":3,"name":"My Prod3","price":"58","thumbnail":"https://unsplash.it/500/300?image=2","description":"Lorem ipsum"},
+{"id":4,"name":"My Prod4","price":"100","thumbnail":"https://unsplash.it/500/300?image=3","description":"Lorem ipsum"},
+{"id":5,"name":"My Prod5","price":"135","thumbnail":"https://unsplash.it/500/300?image=4","description":"Lorem ipsum"},
+{"id":6,"name":"My Prod6","price":"235","thumbnail":"https://unsplash.it/500/300?image=5","description":"Lorem ipsum"},
+{"id":7,"name":"My Prod7","price":"675","thumbnail":"https://unsplash.it/500/300?image=6","description":"Lorem ipsum"},
+{"id":8,"name":"My Prod8","price":"635","thumbnail":"https://unsplash.it/500/300?image=7","description":"Lorem ipsum"},
+{"id":8,"name":"My Prod9","price":"835","thumbnail":"https://unsplash.it/500/300?image=8","description":"Lorem ipsum"},
+{"id":10,"name":"My Prod10","price":"908","thumbnail":"https://unsplash.it/500/300?image=9","description":"Lorem ipsum"},
+{"id":11,"name":"My Prod11","price":"23","thumbnail":"https://unsplash.it/500/300?image=10","description":"Lorem ipsum"}
+]
