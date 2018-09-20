@@ -30,6 +30,7 @@ podTemplate(
 
         stage('Run Unit Tests') {
             container('maven') {
+                sh 'hostname'
             //    sh "mvn clean test"
             //    junit '**/target/*-reports/TEST-*.xml'
             }
