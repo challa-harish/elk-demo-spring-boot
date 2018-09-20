@@ -4,7 +4,7 @@ podTemplate(
     label: 'jenkins-slave-java',
     imagePullSecrets: ['acr-credentials'],
     containers: [
-        containerTemplate(name: 'maven', image: 'maven:3-jdk-8-alpine', ttyEnabled: true, command: 'cat'),
+        containerTemplate(name: 'maven', image: 'maven:3.5.4-jdk-8-alpine', ttyEnabled: true, command: 'cat'),
         containerTemplate(name: 'docker', image: 'docker:stable-git', ttyEnabled: true, command: 'cat'),
         containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.7.10', ttyEnabled: true, command: 'cat')
     ],
@@ -30,8 +30,8 @@ podTemplate(
 
         stage('Run Unit Tests') {
             container('maven') {
-                sh "mvn clean test"
-                junit '**/target/*-reports/TEST-*.xml'
+            //    sh "mvn clean test"
+            //    junit '**/target/*-reports/TEST-*.xml'
             }
         }
 
