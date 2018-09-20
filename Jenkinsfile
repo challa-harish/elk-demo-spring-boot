@@ -30,21 +30,21 @@ podTemplate(
 
         stage('Run Unit Tests') {
             container('maven') {
-                sh 'hostname'
+           //     sh 'hostname'
             //    sh "mvn clean test"
             //    junit '**/target/*-reports/TEST-*.xml'
             }
         }
 
         stage('Compile') {
-            container('maven') {
+            
                 def mvnInfo = readMavenPom()
 
                 sh 'mvn clean package -DskipTests'
                 echo "Docker Registry : ${ACR_LOGINSERVER}"  
                  echo "ArtifactId : ${mvnInfo.getArtifactId()}" 
                 image_name = "${ACR_LOGINSERVER}/${mvnInfo.getArtifactId()}"
-            }
+            
         }
 
         stage('Build Docker Image') {
