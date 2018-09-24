@@ -1,9 +1,10 @@
 podTemplate(
     cloud: 'kubernetes',
     namespace: 'jenkins',
-    label: 'jenkins-slave-java',
+    label: 'jenkins-pipeline',
  //   imagePullSecrets: ['dockerhub-statflo-development'],
     containers: [
+        containerTemplate(name: 'jnlp', image: 'lachlanevenson/jnlp-slave:3.10-1-alpine', args: '${computer.jnlpmac} ${computer.name}', workingDir: '/home/jenkins', resourceRequestCpu: '200m', resourceLimitCpu: '300m', resourceRequestMemory: '256Mi', resourceLimitMemory: '512Mi'),
         containerTemplate(name: 'maven', image: 'maven:3-jdk-8-alpine', ttyEnabled: true, command: 'cat'),
         containerTemplate(name: 'docker', image: 'docker:stable-git', ttyEnabled: true, command: 'cat'),
         containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.7.10', ttyEnabled: true, command: 'cat')
@@ -14,7 +15,7 @@ podTemplate(
     ]
 ) {
 
-    node('jenkins-slave-java') {
+    node('jenkins-pipeline') {
         def image_name
         def image_tag
 
