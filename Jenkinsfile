@@ -1,4 +1,3 @@
-def label = "address-update-ng-${UUID.randomUUID().toString()}"
 podTemplate(
     cloud: 'kubernetes',
     namespace: 'jenkins',
