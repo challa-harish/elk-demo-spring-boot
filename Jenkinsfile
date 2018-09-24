@@ -1,20 +1,4 @@
-podTemplate(
-    cloud: 'kubernetes',
-    namespace: 'jenkins',
-    label: 'jenkins-slave',
- //   imagePullSecrets: ['dockerhub-statflo-development'],
-    containers: [
-        containerTemplate(name: 'maven', image: 'maven:3-jdk-8-alpine', ttyEnabled: true, command: 'cat'),
-        containerTemplate(name: 'docker', image: 'docker:stable-git', ttyEnabled: true, command: 'cat'),
-        containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.7.10', ttyEnabled: true, command: 'cat')
-    ],
-    volumes: [
-        persistentVolumeClaim(mountPath: '/root/.m2/repository', claimName: 'maven-repository-cache', readOnly: false),
-        hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')
-    ]
-) {
-
-    node('jenkins-slave') {
+ node('jenkins-slave') {
         def image_name
         def image_tag
 
@@ -98,4 +82,3 @@ podTemplate(
             echo 'Production deployment approved!'
         }
     }
-}
