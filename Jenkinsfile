@@ -1,7 +1,8 @@
+def label = "address-update-ng-${UUID.randomUUID().toString()}"
 podTemplate(
     cloud: 'kubernetes',
     namespace: 'jenkins',
-    label: 'jenkins-pipeline',
+    label: label,
  //   imagePullSecrets: ['dockerhub-statflo-development'],
     containers: [
         containerTemplate(name: 'jnlp', image: 'lachlanevenson/jnlp-slave:3.10-1-alpine', args: '${computer.jnlpmac} ${computer.name}', workingDir: '/home/jenkins', resourceRequestCpu: '200m', resourceLimitCpu: '300m', resourceRequestMemory: '256Mi', resourceLimitMemory: '512Mi'),
@@ -15,7 +16,7 @@ podTemplate(
     ]
 ) {
 
-    node('jenkins-pipeline') {
+    node(label) {
         def image_name
         def image_tag
 
