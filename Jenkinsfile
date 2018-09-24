@@ -1,7 +1,7 @@
 podTemplate(
     cloud: 'kubernetes',
     namespace: 'jenkins',
-    label: 'jenkins-slave',
+    label: 'jenkins-agent',
  //   imagePullSecrets: ['dockerhub-statflo-development'],
     containers: [
         containerTemplate(name: 'maven', image: 'maven:3-jdk-8-alpine', ttyEnabled: true, command: 'cat'),
@@ -14,7 +14,7 @@ podTemplate(
     ]
 ) {
 
-    node('jenkins-slave') {
+    node('jenkins-agent') {
         def image_name
         def image_tag
 
