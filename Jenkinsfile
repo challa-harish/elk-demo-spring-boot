@@ -2,8 +2,7 @@ def label = "address-update-ng-${UUID.randomUUID().toString()}"
 podTemplate(
     cloud: 'kubernetes',
     namespace: 'jenkins',
-    label: label,
-    inheritFrom: 'default',
+    label: 'jenkins-jenkins-slave ',
  //   imagePullSecrets: ['dockerhub-statflo-development'],
     containers: [
         containerTemplate(name: 'maven', image: 'maven:3-jdk-8-alpine', ttyEnabled: true, command: 'cat'),
@@ -16,7 +15,7 @@ podTemplate(
     ]
 ) {
 
-    node(label) {
+    node('jenkins-jenkins-slave') {
         def image_name
         def image_tag
 
