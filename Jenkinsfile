@@ -26,7 +26,7 @@ podTemplate(
 
         stage('Run Unit Tests') {
             container('maven') {
-                sh "mvn clean test"
+                echo 'maven!'
                 //junit '**/target/*-reports/TEST-*.xml'
             }
         }
@@ -35,25 +35,28 @@ podTemplate(
             container('maven') {
                 def mvnInfo = readMavenPom()
 
-                sh 'mvn clean package -DskipTests'
+                //sh 'mvn clean package -DskipTests'
 
                 image_name = "wsibprivateregistry.azurecr.io/${mvnInfo.getArtifactId()}"
+                echo image_name
             }
         }
 
         stage('Build Docker Image') {
             container('docker') {
+                echo 'docker'
                 // Cannot use: docker.build(mvnInfo.getArtifactId())
                 // Because: https://issues.jenkins-ci.org/browse/JENKINS-46447
-                sh "docker build -t ${image_name} ."
-                sh "docker tag ${image_name} ${image_name}:${image_tag}"
+                //sh "docker build -t ${image_name} ."
+               // sh "docker tag ${image_name} ${image_name}:${image_tag}"
             }
         }
 
         stage('Push Docker Image') {
             container('docker') {
-                withDockerRegistry([credentialsId: 'acr-credentials']) {
-                    sh "docker push ${image_name}:${image_tag}"
+                echo 'push'
+                //withDockerRegistry([credentialsId: 'acr-credentials']) {
+                    //sh "docker push ${image_name}:${image_tag}"
                 }
             }
         }
@@ -66,7 +69,7 @@ podTemplate(
                     def files = findFiles(glob: 'infrastructure/kubernetes/**/*.yaml')
 
                     for (def file : files) {
-                        sh "sed -i 's,\${IMAGE_NAME},${IMAGE_NAME},g;s,\${IMAGE_TAG},${IMAGE_TAG},g' ${file.path}"
+                      sh "sed -i 's,\${IMAGE_NAME},${IMAGE_NAME},g;s,\${IMAGE_TAG},${IMAGE_TAG},g' ${file.path}"
                     }
                 }
             }
