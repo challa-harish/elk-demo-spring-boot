@@ -1,7 +1,9 @@
+def label = "worker-${UUID.randomUUID().toString()}"
+
 podTemplate(
     cloud: 'kubernetes',
-    namespace: 'jenkins',
-    label: 'jenkins-agent',
+    namespace: 'development',
+    label: label,
  //   imagePullSecrets: ['dockerhub-statflo-development'],
     containers: [
         containerTemplate(name: 'maven', image: 'wsibprivateregistry.azurecr.io/maven:3-jdk-8-alpine', ttyEnabled: true, command: 'cat'),
@@ -16,20 +18,17 @@ podTemplate(
     ]
 ) {
 
-    node('jenkins-agent') {
-        def image_name
-        def image_tag
-
-        stage('Checkout SCM') {
-            def scmInfo = checkout(scm)
-
-            image_tag = "${scmInfo.GIT_BRANCH}-${scmInfo.GIT_COMMIT[0..7]}"
-        }
+    node(label) {
+      def myRepo = checkout scm
+      def gitCommit = myRepo.GIT_COMMIT
+      def gitBranch = myRepo.GIT_BRANCH
+      def shortGitCommit = "${gitCommit[0..10]}"
+      def previousGitCommit = sh(script: "git rev-parse ${gitCommit}~", returnStdout: true)
 
         stage('Run Unit Tests') {
             container('maven') {
                 sh "mvn clean test"
-                junit '**/target/*-reports/TEST-*.xml'
+                //junit '**/target/*-reports/TEST-*.xml'
             }
         }
 
@@ -39,7 +38,7 @@ podTemplate(
 
                 sh 'mvn clean package -DskipTests'
 
-                image_name = "statflo/${mvnInfo.getArtifactId()}"
+                image_name = "wsibprivateregistry.azurecr.io/${mvnInfo.getArtifactId()}"
             }
         }
 
