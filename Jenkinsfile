@@ -4,9 +4,11 @@ podTemplate(
     label: 'jenkins-agent',
  //   imagePullSecrets: ['dockerhub-statflo-development'],
     containers: [
-        containerTemplate(name: 'maven', image: 'maven:3-jdk-8-alpine', ttyEnabled: true, command: 'cat'),
-        containerTemplate(name: 'docker', image: 'docker:stable-git', ttyEnabled: true, command: 'cat'),
-        containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.7.10', ttyEnabled: true, command: 'cat')
+        containerTemplate(name: 'maven', image: 'wsibprivateregistry.azurecr.io/maven:3-jdk-8-alpine', ttyEnabled: true, command: 'cat'),
+        containerTemplate(name: 'docker', image: 'wsibprivateregistry.azurecr.io/docker:stable-git', ttyEnabled: true, command: 'cat'),
+        containerTemplate(name: 'kubectl', image: 'wsibprivateregistry.azurecr.io/k8s-kubectl:v1.7.10', ttyEnabled: true, command: 'cat'),
+        containerTemplate(name: 'helm', image: 'wsibprivateregistry.azurecr.io/k8s-helm:latest', ttyEnabled: true, command: 'cat')
+        
     ],
     volumes: [
         persistentVolumeClaim(mountPath: '/root/.m2/repository', claimName: 'maven-repository-cache', readOnly: false),
