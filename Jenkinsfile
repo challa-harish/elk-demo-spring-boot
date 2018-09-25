@@ -57,7 +57,7 @@ podTemplate(
                 echo 'push'
                 //withDockerRegistry([credentialsId: 'acr-credentials']) {
                     //sh "docker push ${image_name}:${image_tag}"
-                }
+              //  }
             }
         }
 
@@ -77,16 +77,17 @@ podTemplate(
 
         stage('Deploy to Development') {
             container('kubectl') {
-                withCredentials([file(credentialsId: 'kube-config', variable: 'KUBE_CONFIG')]) {
-                    def kubectl = "kubectl --kubeconfig=${KUBE_CONFIG} --context=kubernetes-development"
+                //withCredentials([file(credentialsId: 'kube-config', variable: 'KUBE_CONFIG')]) {
+                    //def kubectl = "kubectl --kubeconfig=${KUBE_CONFIG} --context=kubernetes-development"
                      echo 'deploy to deployment!'
 
                     //sh "${kubectl} apply -f ./infrastructure/kubernetes/development"
 
                     // Consider verifying if at least deployment got successfully done.
                     // Example: kubectl rollout status -n <namespace> deployment/<deployment_name>
-                }
-            }
+               
+            //}
+           }
         }
 
         stage('Deploy to Canary') {
