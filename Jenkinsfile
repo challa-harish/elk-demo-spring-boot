@@ -53,7 +53,7 @@ podTemplate(
 
         stage('Push Docker Image') {
             container('docker') {
-                withDockerRegistry([credentialsId: 'dockerhub-statflo-development']) {
+                withDockerRegistry([credentialsId: 'acr-credentials']) {
                     sh "docker push ${image_name}:${image_tag}"
                 }
             }
@@ -61,6 +61,7 @@ podTemplate(
 
         stage('Preparing Deployment scripts') {
             container('kubectl') {
+                 echo 'preparation of deployment scripts!'
                 // Inject image and tag values in deployment scripts
                 withEnv(["IMAGE_NAME=${image_name}", "IMAGE_TAG=${image_tag}"]) {
                     def files = findFiles(glob: 'infrastructure/kubernetes/**/*.yaml')
@@ -76,8 +77,9 @@ podTemplate(
             container('kubectl') {
                 withCredentials([file(credentialsId: 'kube-config', variable: 'KUBE_CONFIG')]) {
                     def kubectl = "kubectl --kubeconfig=${KUBE_CONFIG} --context=kubernetes-development"
+                     echo 'deploy to deployment!'
 
-                    sh "${kubectl} apply -f ./infrastructure/kubernetes/development"
+                    //sh "${kubectl} apply -f ./infrastructure/kubernetes/development"
 
                     // Consider verifying if at least deployment got successfully done.
                     // Example: kubectl rollout status -n <namespace> deployment/<deployment_name>
