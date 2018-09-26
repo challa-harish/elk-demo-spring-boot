@@ -20,6 +20,7 @@ podTemplate(
 
     node(label) {
       def myRepo = checkout scm
+      sh 'pwd'
       def gitCommit = myRepo.GIT_COMMIT
       def gitBranch = myRepo.GIT_BRANCH
  //     def shortGitCommit = "${gitCommit[0..10]}"
@@ -27,8 +28,9 @@ podTemplate(
 
         stage('Compile') {
             container('maven') {
+                sh 'pwd' 
                 def mvnInfo = readMavenPom()
-                sh 'mvn -version'
+               echo "maven info ${mvnInfo}"
                 sh 'mvn clean install -DskipTests'
 
                 image_name = "wsibprivateregistry.azurecr.io/${mvnInfo.getArtifactId()}"
