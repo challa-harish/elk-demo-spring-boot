@@ -21,24 +21,17 @@ podTemplate(
       def myRepo = checkout scm
       def gitCommit = myRepo.GIT_COMMIT
       def gitBranch = myRepo.GIT_BRANCH
-      def shortGitCommit = "${gitCommit[0..10]}"
-      def previousGitCommit = sh(script: "git rev-parse ${gitCommit}~", returnStdout: true)
-
-        stage('Run Unit Tests') {
-            container('maven') {
-                echo 'maven!'
-                //junit '**/target/*-reports/TEST-*.xml'
-            }
-        }
+ //     def shortGitCommit = "${gitCommit[0..10]}"
+ //     def previousGitCommit = sh(script: "git rev-parse ${gitCommit}~", returnStdout: true)
 
         stage('Compile') {
             container('maven') {
-                def mvnInfo = readMavenPom()
+             //   def mvnInfo = readMavenPom()
 
-                //sh 'mvn clean package -DskipTests'
+                sh 'mvn clean package -DskipTests'
 
-                image_name = "wsibprivateregistry.azurecr.io/${mvnInfo.getArtifactId()}"
-                echo image_name
+               // image_name = "wsibprivateregistry.azurecr.io/${mvnInfo.getArtifactId()}"
+                //echo image_name
             }
         }
 
