@@ -27,12 +27,12 @@ podTemplate(
 
         stage('Compile') {
             container('maven') {
-             //   def mvnInfo = readMavenPom()
+                def mvnInfo = readMavenPom()
                 sh 'mvn -version'
                 sh 'mvn clean install -DskipTests'
 
-               // image_name = "wsibprivateregistry.azurecr.io/${mvnInfo.getArtifactId()}"
-                //echo image_name
+                image_name = "wsibprivateregistry.azurecr.io/${mvnInfo.getArtifactId()}"
+                echo image_name
             }
         }
 
