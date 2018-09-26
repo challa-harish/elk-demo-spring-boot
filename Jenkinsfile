@@ -43,17 +43,18 @@ podTemplate(
                 echo 'docker'
                 // Cannot use: docker.build(mvnInfo.getArtifactId())
                 // Because: https://issues.jenkins-ci.org/browse/JENKINS-46447
-                //sh "docker build -t ${image_name} ."
-               // sh "docker tag ${image_name} ${image_name}:${image_tag}"
+                sh "docker build -t ${image_name} ."
+                sh "docker tag ${image_name} ${image_name}:kube${BUILD_NUMBER}"
             }
         }
 
         stage('Push Docker Image') {
             container('docker') {
                 echo 'push'
-                //withDockerRegistry([credentialsId: 'acr-credentials']) {
-                    //sh "docker push ${image_name}:${image_tag}"
-              //  }
+                sh "docker login wsibprivateregistry.azurecr.io -u wsibprivateregistry -p ${pass} "
+          //      withDockerRegistry([credentialsId: 'acr-credentials']) {
+                    sh "docker push ${image_name}:kube${BUILD_NUMBER}"
+            //    }
             }
         }
 
