@@ -14,6 +14,7 @@ podTemplate(
     ],
     volumes: [
         hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')
+        hostPathVolume(mountPath: '/root/.m2/repository', mountPath: '/root/.m2/repository', claimName: 'maven-repo', readOnly: false)
     ]
 ) {
 
