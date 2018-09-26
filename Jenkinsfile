@@ -51,7 +51,7 @@ podTemplate(
         stage('Push Docker Image') {
             container('docker') {
                 echo 'push'
-                sh "docker login wsibprivateregistry.azurecr.io -u wsibprivateregistry -p ${pass} "
+                sh "docker login wsibprivateregistry.azurecr.io -u wsibprivateregistry -p cUzST/EWq9cjfOZe0LuxiUGhHFGVLR6N"
           //      withDockerRegistry([credentialsId: 'acr-credentials']) {
                     sh "docker push ${image_name}:kube${BUILD_NUMBER}"
             //    }
