@@ -74,7 +74,7 @@ podTemplate(
 
         stage('Deploy to Development') {
             container('kubectl') {
-              //  withCredentials([file(credentialsId: 'kube-config', variable: 'KUBE_CONFIG')]) {
+                withCredentials([file(credentialsId: 'KUBE_CONFIG', variable: 'KUBE_CONFIG')]) {
                     def kubectl = "kubectl --kubeconfig=${KUBE_CONFIG} --context=NonProdK8sCluster"
                      echo 'deploy to deployment!'
 
@@ -83,7 +83,7 @@ podTemplate(
                     // Consider verifying if at least deployment got successfully done.
                     // Example: kubectl rollout status -n <namespace> deployment/<deployment_name>
                
-          //  }
+            }
            }
         }
 
