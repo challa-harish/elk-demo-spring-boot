@@ -62,28 +62,28 @@ podTemplate(
             container('kubectl') {
                  echo 'preparation of deployment scripts!'
                 // Inject image and tag values in deployment scripts
-                withEnv(["IMAGE_NAME=${image_name}", "IMAGE_TAG=${image_tag}"]) {
-                    def files = findFiles(glob: 'infrastructure/kubernetes/**/*.yaml')
+              // withEnv(["IMAGE_NAME=${image_name}", "IMAGE_TAG=${image_tag}"]) {
+                //    def files = findFiles(glob: 'infrastructure/kubernetes/**/*.yaml')
 
-                    for (def file : files) {
-                      sh "sed -i 's,\${IMAGE_NAME},${IMAGE_NAME},g;s,\${IMAGE_TAG},${IMAGE_TAG},g' ${file.path}"
-                    }
-                }
+                  //  for (def file : files) {
+                    //  sh "sed -i 's,\${IMAGE_NAME},${IMAGE_NAME},g;s,\${IMAGE_TAG},${IMAGE_TAG},g' ${file.path}"
+                   // }
+                //} 
             }
         }
 
         stage('Deploy to Development') {
             container('kubectl') {
-                //withCredentials([file(credentialsId: 'kube-config', variable: 'KUBE_CONFIG')]) {
-                    //def kubectl = "kubectl --kubeconfig=${KUBE_CONFIG} --context=kubernetes-development"
+                withCredentials([file(credentialsId: 'kube-config', variable: 'KUBE_CONFIG')]) {
+                    def kubectl = "kubectl --kubeconfig=${KUBE_CONFIG} --context=kubernetes-development"
                      echo 'deploy to deployment!'
 
-                    //sh "${kubectl} apply -f ./infrastructure/kubernetes/development"
+                    sh "${kubectl} apply -f ./infrastructure/elk-springboot-service-all-in-one.yaml"
 
                     // Consider verifying if at least deployment got successfully done.
                     // Example: kubectl rollout status -n <namespace> deployment/<deployment_name>
                
-            //}
+            }
            }
         }
 
