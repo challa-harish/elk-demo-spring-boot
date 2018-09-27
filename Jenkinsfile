@@ -75,7 +75,7 @@ podTemplate(
         stage('Deploy to Development') {
             container('kubectl') {
               //  withCredentials([file(credentialsId: 'kube-config', variable: 'KUBE_CONFIG')]) {
-                    def kubectl = "kubectl --kubeconfig=./config --context=NonProdK8sCluster"
+                    def kubectl = "kubectl --kubeconfig=${KUBE_CONFIG} --context=NonProdK8sCluster"
                      echo 'deploy to deployment!'
 
                     sh "${kubectl} apply -f ./infrastructure/elk-springboot-service-all-in-one.yaml"
