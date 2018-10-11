@@ -47,7 +47,7 @@ podTemplate(
                 // Cannot use: docker.build(mvnInfo.getArtifactId())
                 // Because: https://issues.jenkins-ci.org/browse/JENKINS-46447
                 sh "docker build -t ${image_name} ."
-                sh "docker tag ${image_name} ${image_name}:kube${BUILD_NUMBER}"
+                sh "docker tag ${image_name} ${image_name}:${image_tag}"
             }
         }
 
