@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: demo
-          image: wsibprivateregistry.azurecr.io/demo:kube4
+          image: wsibprivateregistry.azurecr.io/${IMAGE_NAME}:${IMAGE_TAG}
           ports:
             - containerPort: 8099
 ---

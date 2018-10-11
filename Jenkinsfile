@@ -19,10 +19,13 @@ podTemplate(
 ) {
 
     node(label) {
-      def myRepo = checkout scm
+      def scmInfo = checkout scm
+      def image_tag
+      def image_name
       sh 'pwd'
-      def gitCommit = myRepo.GIT_COMMIT
-      def gitBranch = myRepo.GIT_BRANCH
+      def gitCommit = scmInfo.GIT_COMMIT
+      def gitBranch = scmInfo.GIT_BRANCH
+      image_tag = "${scmInfo.GIT_BRANCH}-${scmInfo.GIT_COMMIT[0..7]}"
  //     def shortGitCommit = "${gitCommit[0..10]}"
  //     def previousGitCommit = sh(script: "git rev-parse ${gitCommit}~", returnStdout: true)
 
@@ -53,7 +56,7 @@ podTemplate(
                 echo 'push'
                 sh "docker login wsibprivateregistry.azurecr.io -u wsibprivateregistry -p ${pass}"
           //      withDockerRegistry([credentialsId: 'acr-credentials']) {
-                    sh "docker push ${image_name}:kube${BUILD_NUMBER}"
+                    sh "docker push ${image_name}:${image_tag}"
             //    }
             }
         }
@@ -62,13 +65,13 @@ podTemplate(
             container('kubectl') {
                  echo 'preparation of deployment scripts!'
                 // Inject image and tag values in deployment scripts
-              // withEnv(["IMAGE_NAME=${image_name}", "IMAGE_TAG=${image_tag}"]) {
-                //    def files = findFiles(glob: 'infrastructure/kubernetes/**/*.yaml')
+               withEnv(["IMAGE_NAME=${image_name}", "IMAGE_TAG=${image_tag}"]) {
+                    def files = findFiles(glob: 'infrastructure/*.yaml')
 
-                  //  for (def file : files) {
-                    //  sh "sed -i 's,\${IMAGE_NAME},${IMAGE_NAME},g;s,\${IMAGE_TAG},${IMAGE_TAG},g' ${file.path}"
-                   // }
-                //} 
+                    for (def file : files) {
+                      sh "sed -i 's,\${IMAGE_NAME},${IMAGE_NAME},g;s,\${IMAGE_TAG},${IMAGE_TAG},g' ${file.path}"
+                    }
+              } 
             }
         }
 
