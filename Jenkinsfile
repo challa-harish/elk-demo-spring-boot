@@ -97,11 +97,11 @@ podTemplate(
 
         stage('Deploy to Production') {
             timeout(time: 4, unit:'HOURS') {
-                input(message: 'Approve deployment to production?')
+                input(message: 'Please Approve deployment to production?')
             }
 
             // Only deploy if image_tag is a git tag
-            echo 'Production deployment approved!'
+            echo 'Production deployment  is approved!'
         }
     }
 }
