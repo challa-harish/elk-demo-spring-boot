@@ -103,5 +103,13 @@ podTemplate(
             // Only deploy if image_tag is a git tag
             echo 'Production deployment  is approved!'
         }
+     
+     stage('slack- notification') {
+         slackSend baseUrl: 'https://wsibworkspace.slack.com/services/hooks/jenkins-ci/', 
+            channel: 'jenkins-elk',
+            color: 'good',
+            message: 'Elk Spring boot', 
+            tokenCredentialId: 'slack-domain'
+        }
     }
 }
