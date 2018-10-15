@@ -101,7 +101,7 @@ podTemplate(
             }
 
             // Only deploy if image_tag is a git tag
-            echo 'Production deployment approved!'
+            echo 'Production deployment  is approved!'
         }
     }
 }
