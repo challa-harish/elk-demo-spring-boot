@@ -62,6 +62,30 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+          		<groupId>org.apache.maven.plugins</groupId>
+          		<artifactId>maven-checkstyle-plugin</artifactId>
+         		<version>3.0.0</version>
+          		<configuration>
+				  <includeTestSourceDirectory>true</includeTestSourceDirectory>
+				  <failOnViolation>true</failOnViolation>
+				  <violationSeverity>warning</violationSeverity>
+				  <consoleOutput>true</consoleOutput>
+				  <configLocation>sun_checks.xml</configLocation>
+				</configuration>
+        </plugin>
+		<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-pmd-plugin</artifactId>
+    <version>3.9.0</version>
+	 <configuration>
+        <rulesets>
+        	<ruleset>rulesets/java/braces.xml</ruleset>
+        	<ruleset>rulesets/java/naming.xml</ruleset>
+        </rulesets>
+   	 </configuration>
+   
+</plugin>
 		</plugins>
 	</build>
 

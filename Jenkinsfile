@@ -108,7 +108,7 @@ podTemplate(
          slackSend baseUrl: 'https://wsibworkspace.slack.com/services/hooks/jenkins-ci/', 
             channel: 'jenkins-elk',
             color: 'good',
-            message: 'Elk Spring boot', 
+            message: 'Elk Spring boot is deployed to dev', 
             tokenCredentialId: 'slack-domain'
         }
     }
