@@ -1,3 +1,9 @@
+import java.text.SimpleDateFormat
+import groovy.io.FileType
+import javax.naming.CommunicationException
+import java.net.ConnectException
+import hudson.AbortException
+
 def label = "worker-${UUID.randomUUID().toString()}"
 
 podTemplate(
