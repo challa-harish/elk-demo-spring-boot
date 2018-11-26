@@ -111,5 +111,60 @@ podTemplate(
             message: 'Elk Spring boot is deployed to dev', 
             tokenCredentialId: 'slack-domain'
         }
+		
+stage('UpdateFile') {
+    def line
+	def list  
+    def infile = new File("uat-commit.properties")
+			infile << '\n' << "elk-demo=no-commitIDs,"
+	
+	sh 'sed -i "/^$/d" uat-commit.properties'
+	
+    def tmpFile = new File("new.tmp")
+	for (i = 0; i <infile.readLines().size().toInteger(); i++){
+	line = infile.readLines().get(i)
+	if( line.startsWith( 'elk-demo' ) ) {
+ 			list = line.tokenize(",")
+			line = ''
+			if (list.size().toInteger() > 5)
+			{
+			  for (ix = 0; ix <list.size().toInteger(); ix++){
+			   switch (ix) {
+                case 1:
+				break
+				default:
+                 if (ix !=0 ){
+				 line = line + "," + list.get(ix) 
+				 }
+				 else{
+				  line = list.get(ix) 
+				 }
+				break
+				}
+                } 
+             line = line + ',' + "${image_name}:${image_tag}" 				
+			}
+			else
+			{
+			for (ix = 0; ix <list.size().toInteger(); ix++){ 
+			     if (ix !=0 ){
+				 line = line + "," + list.get(ix) 
+				 }
+				 else{
+				  line = list.get(ix) 
+				 }
+			}
+			line = line + ',' + "${image_name}:${image_tag}"
+			}
+            tmpFile << '\n' << line
+			}
+			else{			
+            tmpFile << '\n' << line
+			}
+
+}
+ tmpFile.renameTo( infile )
+ sh 'sed -i "/^$/d" uat-commit.properties'
+}
     }
 }
