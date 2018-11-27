@@ -122,7 +122,7 @@ stage('UpdateFile') {
     def line
 	def list  
     def infile = new File("/home/jenkins/workspace/uat-commit.properties")
-	sh 'll'	
+	sh 'ls'	
     def tmpFile = new File("new.tmp")
 	for (i = 0; i <infile.readLines().size().toInteger(); i++){
 	line = infile.readLines().get(i)
