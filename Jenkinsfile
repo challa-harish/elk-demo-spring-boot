@@ -122,7 +122,6 @@ stage('UpdateFile') {
     def line
 	def list  
     def infile = new File("uat-commit.properties")
-			infile << '\n' << "elk-demo=no-commitIDs,"
 	
 	sh 'sed -i "/^$/d" uat-commit.properties'
 	
