@@ -35,7 +35,15 @@ podTemplate(
                 def mvnInfo = readMavenPom()
                echo "maven info ${mvnInfo}"
                 sh 'mvn clean install -DskipTests'
-
+                withSonarQubeEnv('sonarqube') {
+                 sh 'mvn clean package sonar:sonar'
+              }    
+                timeout(time: 1, unit: 'HOURS') {
+                 def qg = waitForQualityGate()
+                  if (qg.status != 'OK') {
+                    error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                 }
+          }
                 image_name = "wsibprivateregistry.azurecr.io/${mvnInfo.getArtifactId()}"
                 echo image_name
             }
