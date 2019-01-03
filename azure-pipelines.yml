@@ -23,6 +23,6 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+    goals: 'clean install'
 - script: docker build -f Dockerfile -t $(imageName) .
   displayName: 'docker build'
