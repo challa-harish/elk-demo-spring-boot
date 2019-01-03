@@ -9,6 +9,10 @@ trigger:
 pool:
   vmImage: 'Ubuntu-16.04'
 
+
+variables:
+  imageName: 'your-container-image-name:$(build.buildId)'
+
 steps:
 - task: Maven@3
   inputs:
@@ -20,10 +24,5 @@ steps:
     publishJUnitResults: false
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
-
-variables:
-  imageName: 'your-container-image-name:$(build.buildId)'
-
-steps:
 - script: docker build -f Dockerfile -t $(imageName) .
   displayName: 'docker build'
