@@ -13,10 +13,10 @@ VOLUME /tmp
 #EXPOSE 8082
 
 # The application's jar file
-ARG JAR_FILE=demo-0.0.1-SNAPSHOT.jar
+ARG JAR_FILE=target/demo-0.0.1-SNAPSHOT.jar
 
 # Add the application's jar to the container
-#ADD /home/vsts/.m2/repository/com/example/demo/0.0.1-SNAPSHOT/demo-0.0.1-SNAPSHOT.jar demo-0.0.1-SNAPSHOT.jar
+ADD #{JAR_FILE} demo-0.0.1-SNAPSHOT.jar
 
 # Run the jar file 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=container","-jar","/home/vsts/.m2/repository/com/example/demo/0.0.1-SNAPSHOT/demo-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=container","-jar","demo-0.0.1-SNAPSHOT.jar"]
